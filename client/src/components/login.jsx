@@ -1,0 +1,106 @@
+import React, { useState } from "react";
+
+function AuthForm() {
+  const [isRegister, setIsRegister] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
+
+  const toggleForm = () => {
+    setIsRegister(!isRegister);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isRegister) {
+      // Handle registration logic here
+      console.log("Registration data:", formData);
+    } else {
+      // Handle login logic here
+      console.log("Login data:", formData);
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="w-1/3 border p-4">
+        <h2 className="text-2xl mb-4 text-white">
+          {isRegister ? "Register" : "Login"}
+        </h2>
+        <form onSubmit={handleSubmit}>
+          {isRegister && (
+            <div className="mb-4">
+              <label
+                htmlFor="fullName"
+                className="block text-white text-sm mb-2"
+              >
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="w-full border p-2 rounded"
+                required
+              />
+            </div>
+          )}
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-white text-sm mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-white text-sm mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded"
+            >
+              {isRegister ? "Register" : "Login"}
+            </button>
+            <button
+              type="button"
+              onClick={toggleForm}
+              className="bg-gray-300 text-gray-700 p-2 rounded"
+            >
+              {isRegister ? "Switch to Login" : "Switch to Register"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default AuthForm;
