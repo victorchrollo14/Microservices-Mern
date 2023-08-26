@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AuthForm() {
+export function AuthForm() {
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -17,14 +17,57 @@ function AuthForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const register = async () => {
+    try {
+      const { fullName, email, password } = formData;
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        body: JSON.stringify({
+          fullName: fullName,
+          email: email,
+          password: password,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      const responseData = await response.json();
+      if (responseData.error) {
+        alert(responseData.error);
+        return;
+      }
+      alert(responseData.message);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (isRegister) {
-      // Handle registration logic here
-      console.log("Registration data:", formData);
+      // Handle register logic
+      register();
     } else {
-      // Handle login logic here
-      console.log("Login data:", formData);
+      try {
+        const { email, password } = formData;
+        const response = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          body: JSON.stringify({ email: email, password: password }),
+          headers: {
+            "Content-type": "application/json",
+          },
+        });
+        const data = await response.json();
+
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+        alert(data.message);
+      } catch (err) {
+        alert(`error: ${err}`);
+      }
     }
   };
 
@@ -102,5 +145,3 @@ function AuthForm() {
     </div>
   );
 }
-
-export default AuthForm;
