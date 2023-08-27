@@ -13,6 +13,8 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import bodyParser from "body-parser";
 import session from "express-session";
+import passport from "passport";
+import cookieParser from "cookie-parser";
 
 import userRouter from "./userController.js";
 
@@ -36,11 +38,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const sessionConfig = {
-  secret: "dogs",
+  cookie: {
+    path: "/",
+    httpOnly: false,
+    maxAge: 24 * 60 * 60 * 1000,
+  },
+  secret: "Cats",
   resave: false,
   saveUninitialized: true,
 };
+app.use(cookieParser());
 app.use(session(sessionConfig));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routing
 app.get("/", (req, res) => {

@@ -43,10 +43,24 @@ const login = async (req, res) => {
       return;
     }
 
-    req.session.user = user;
+
     res.status(200).json({ message: "successfully logged In" });
   } catch (err) {
     res.status(400).json({ error: err });
+  }
+};
+
+const checkLogin = async (req, res) => {
+  console.log(req.session.user);
+
+  try {
+    if (req.session.user) {
+      res.status(200).json({ login: true });
+      return;
+    }
+    res.status(200).json({ login: false });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -54,5 +68,6 @@ const userRouter = Router();
 
 userRouter.post("/register", register);
 userRouter.post("/login", login);
+userRouter.get("/checkLogin", checkLogin);
 
 export default userRouter;
