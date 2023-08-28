@@ -60,7 +60,7 @@ app.use("/", userRouter);
 
 const runServer = async () => {
   try {
-    let connection = await mongoose.connect(process.env.MONGODB_URI);
+    let connection = await mongoose.connect(process.env.USERDB_MONGODB_URI);
     if (connection) console.log("connected to userDB Database");
 
     app.listen(PORT, () => {

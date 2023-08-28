@@ -1,6 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import mongoose from "mongoose";
+import "dotenv/config";
 
 const app = express();
 const PORT = 4000;
@@ -29,6 +31,9 @@ app.get("/", (req, res) => {
 
 const runServer = async () => {
   try {
+    await mongoose.connect(process.env.PRODUCT_MONGODB_URI);
+    console.log("connected to mongo product Database");
+    
     app.listen(PORT, () => {
       console.log(`Product service running on port ${PORT}`);
     });
