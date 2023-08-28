@@ -9,12 +9,15 @@ export const Home = () => {
 
   const checklogin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/checkLogin", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:80/user/checkLogin`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
 
       if (data.error) alert(data.error);

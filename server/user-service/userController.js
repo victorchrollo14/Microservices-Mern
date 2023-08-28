@@ -68,6 +68,6 @@ const userRouter = Router();
 
 userRouter.post("/register", register);
 userRouter.post("/login", login);
-userRouter.get("/checkLogin", checkLogin);
+userRouter.get("/user/checkLogin", checkLogin);
 
 export default userRouter;
