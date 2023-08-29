@@ -3,6 +3,10 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
+import path from "path";
+import { fileURLToPath } from "url";
+
+import { productRouter } from "./route.js";
 
 const app = express();
 const PORT = 4000;
@@ -24,16 +28,25 @@ const corsConfig = {
 };
 app.use(cors(corsConfig));
 
+// serving static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(
+  "/ProductAssets",
+  express.static(path.join(__dirname, "..", "ProductAssets"))
+);
+
 // routing
 app.get("/", (req, res) => {
   res.status(200).send("ok");
 });
+app.use("/product", productRouter);
 
 const runServer = async () => {
   try {
     await mongoose.connect(process.env.PRODUCT_MONGODB_URI);
     console.log("connected to mongo product Database");
-    
+
     app.listen(PORT, () => {
       console.log(`Product service running on port ${PORT}`);
     });
