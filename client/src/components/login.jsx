@@ -20,7 +20,7 @@ export function AuthForm() {
   const register = async () => {
     try {
       const { fullName, email, password } = formData;
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("http://localhost:80/user/register", {
         method: "POST",
         body: JSON.stringify({
           fullName: fullName,
@@ -51,7 +51,7 @@ export function AuthForm() {
     } else {
       try {
         const { email, password } = formData;
-        const response = await fetch("http://localhost:3000/login", {
+        const response = await fetch("http://localhost:80/user/login", {
           method: "POST",
           body: JSON.stringify({ email: email, password: password }),
           headers: {
@@ -60,11 +60,19 @@ export function AuthForm() {
         });
         const data = await response.json();
 
+        // adding token to localStorage
+        const token = await data.token;
+        const user = await data.user;
+        localStorage.setItem("Token", token);
+        localStorage.setItem("User", JSON.stringify(user));
+
         if (data.error) {
           alert(data.error);
           return;
         }
         alert(data.message);
+
+        window.location.reload();
       } catch (err) {
         alert(`error: ${err}`);
       }

@@ -13,10 +13,9 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import bodyParser from "body-parser";
 import session from "express-session";
-import passport from "passport";
 import cookieParser from "cookie-parser";
 
-import userRouter from "./userController.js";
+import userRouter from "./route.js";
 
 const PORT = 3000;
 const app = Express();
@@ -49,8 +48,6 @@ const sessionConfig = {
 };
 app.use(cookieParser());
 app.use(session(sessionConfig));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // routing
 app.get("/", (req, res) => {
@@ -60,7 +57,7 @@ app.use("/", userRouter);
 
 const runServer = async () => {
   try {
-    let connection = await mongoose.connect("mongodb://localhost:27017/userDB");
+    let connection = await mongoose.connect(process.env.USER_MONGODB_URI);
     if (connection) console.log("connected to userDB Database");
 
     app.listen(PORT, () => {
