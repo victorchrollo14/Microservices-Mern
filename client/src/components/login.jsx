@@ -8,6 +8,7 @@ export function AuthForm() {
     password: "",
   });
 
+
   const toggleForm = () => {
     setIsRegister(!isRegister);
   };
