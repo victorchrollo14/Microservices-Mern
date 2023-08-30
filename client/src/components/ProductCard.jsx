@@ -9,7 +9,7 @@ export const ProductCard = ({ item }) => {
       <figure>
         <Link to={"/"} className="rounded-xl image-wrapper">
           <img
-            src={images[0]}
+            src={images[1]}
             alt=""
             srcSet=""
             className="normal-image rounded-xl"
@@ -24,7 +24,7 @@ export const ProductCard = ({ item }) => {
             {subtitle}
           </span>
           <span className="font-Volkhov text-xs text-[#3D4F63] sm:text-sm">
-            {price}
+            ${price}
           </span>
         </figcaption>
       </figure>
