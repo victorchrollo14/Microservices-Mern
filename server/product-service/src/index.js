@@ -32,7 +32,7 @@ app.use(cors(corsConfig));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(
-  "/ProductAssets",
+  "/product/ProductAssets",
   express.static(path.join(__dirname, "..", "ProductAssets"))
 );
 

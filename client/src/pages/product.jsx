@@ -6,18 +6,17 @@ export const Product = () => {
   const [allProducts, setAllProducts] = useState([]);
 
   const getProducts = async () => {
-    const response = await fetch("http://localhost:4000/product/getData");
+    const response = await fetch("http://localhost:80/product/getData");
     const data = await response.json();
 
     for (const prod of data) {
       const image1 = prod.images[0];
       const image2 = prod.images[1];
-      prod.images[0] = `http://localhost:4000/${image1}`;
-      prod.images[1] = `http://localhost:4000/${image2}`;
+      prod.images[0] = `http://localhost:80/product/${image1}`;
+      prod.images[1] = `http://localhost:80/product/${image2}`;
     }
 
     setAllProducts(data);
-    console.log(data);
   };
 
   useEffect(() => {

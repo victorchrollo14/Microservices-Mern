@@ -16,16 +16,22 @@ export const ProductCard = ({ item }) => {
           />
           {/* <img src={images[1]} alt="" className="hover-image" /> */}
         </Link>
-        <figcaption className="flex flex-col gap-1">
-          <span className="font-Poppins text-sm leading-none font-medium mt-2 sm:text-base sm:font-semibold ">
-            {title}
-          </span>
-          <span className="font-Volkhov text-xs text-[#3D4F63] sm:text-sm">
-            {subtitle}
-          </span>
-          <span className="font-Volkhov text-xs text-[#3D4F63] sm:text-sm">
-            ${price}
-          </span>
+        <figcaption className="flex flex-row gap-1 justify-between items-center">
+          <div className="text-content flex flex-col gap-1">
+            {" "}
+            <span className="font-Poppins text-sm leading-none font-medium mt-2 sm:text-base sm:font-semibold ">
+              {title}
+            </span>
+            <span className="font-Volkhov text-xs text-[#3D4F63] sm:text-sm">
+              {subtitle}
+            </span>
+            <span className="font-Volkhov text-xs text-[#3D4F63] sm:text-sm">
+              ${price}
+            </span>
+          </div>
+          <div className="add-to-cart bg-black text-white hover:border py-3 px-4 rounded-lg cursor-pointer hover:text-black hover:bg-white">
+            CART +
+          </div>
         </figcaption>
       </figure>
     </li>
