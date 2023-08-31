@@ -53,7 +53,7 @@ app.use(session(sessionConfig));
 app.get("/", (req, res) => {
   res.status(200).send("ok");
 });
-app.use("/", userRouter);
+app.use("/user", userRouter);
 
 const runServer = async () => {
   try {

@@ -4,8 +4,8 @@ import { verifyToken } from "./auth.js";
 
 const userRouter = Router();
 
-userRouter.post("/user/register", register);
-userRouter.post("/user/login", login);
-userRouter.get("/user/checkLogin", verifyToken, checkLogin);
+userRouter.post("/register", register);
+userRouter.post("/login", login);
+userRouter.get("/checkLogin", verifyToken, checkLogin);
 
 export default userRouter;

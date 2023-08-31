@@ -2,7 +2,8 @@ import Express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
-import "dotenv/config"
+import "dotenv/config";
+import { cartRouter } from "./route";
 
 const app = Express();
 const PORT = 5000;
@@ -22,6 +23,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use("/cart", cartRouter);
 
 const runServer = async () => {
   const connect = await mongoose.connect(process.env.CART_MONGODB_URI);
