@@ -10,13 +10,15 @@ const connectToRabbitMQ = async () => {
   await channel.assertQueue("cart-service-queue");
 };
 
-connectToRabbitMQ().then(() => {
-  channel.consume("cart-service-queue", (data) => {
-    console.log("consumed data from user-service-queue");
-    const user = JSON.parse(data.content);
-    createCart(user);
-    channel.ack(data);
-  });
-});
+connectToRabbitMQ()
+  .then(() => {
+    channel.consume("cart-service-queue", (data) => {
+      console.log("consumed data from user-service-queue");
+      const user = JSON.parse(data.content);
+      createCart(user);
+      channel.ack(data);
+    });
+  })
+  .catch((err) => console.log(`error: ${err}`));
 
 export { connectToRabbitMQ, channel };
