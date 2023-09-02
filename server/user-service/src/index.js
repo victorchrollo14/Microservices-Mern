@@ -14,8 +14,10 @@ import "dotenv/config";
 import bodyParser from "body-parser";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import amqp from "amqplib";
 
 import userRouter from "./route.js";
+import { connectToRabbitMQ } from "./userQueue.js";
 
 const PORT = 3000;
 const app = Express();
@@ -54,6 +56,9 @@ app.get("/", (req, res) => {
   res.status(200).send("ok");
 });
 app.use("/user", userRouter);
+
+// connecting to rabbitmq
+connectToRabbitMQ();
 
 const runServer = async () => {
   try {

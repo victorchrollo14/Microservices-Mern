@@ -2,6 +2,8 @@ import User from "./model.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config.js";
 
+import { channel } from "./userQueue.js";
+
 const register = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
@@ -19,6 +21,11 @@ const register = async (req, res) => {
       password: password,
     });
     await newUser.save();
+
+    channel.sendToQueue(
+      "cart-service-queue",
+      Buffer.from(JSON.stringify({ newUser }))
+    );
 
     res
       .status(200)

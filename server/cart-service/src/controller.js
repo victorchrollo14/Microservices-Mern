@@ -1,6 +1,10 @@
+import { channel } from "./cartQueue.js";
+
 const getCart = () => {};
 
-const createCart = () => {};
+const createCart = (user) => {
+  
+};
 
 const addItem = () => {};
 

@@ -1,9 +1,16 @@
 import { Router } from "express";
-import { verifyToken } from "./auth";
+import { verifyToken } from "./auth.js";
+import {
+  createCart,
+  getCart,
+  addItem,
+  deleteAllItems,
+  deleteItem,
+} from "./controller.js";
 
 export const cartRouter = Router();
 
-cartRouter.post("/", verifyToken, createCart);
+cartRouter.post("/", createCart);
 cartRouter.get("/", verifyToken, getCart);
 cartRouter.post("/add/:productId", verifyToken, addItem);
 cartRouter.post("/delete/:productId", verifyToken, deleteItem);

@@ -10,5 +10,9 @@ Skipping that and implementing it in node.js/express.js and mongodb.
 * user Service
 * product service
 * cart service
-* nginx for api routing
-* a custom event bus - To handle communication between services - Rabbitmq, apache kafka etc.
+* nginx for api routing - Using it as a reverse proxy.
+* Message broker - For communication between microservices, using rabbitmq.
+
+#### The below diagram explains how message brokers work.
+
+![1693663975068](image/README/1693663975068.png)
