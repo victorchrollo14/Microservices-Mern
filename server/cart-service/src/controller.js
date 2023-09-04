@@ -1,12 +1,24 @@
-import { channel } from "./cartQueue.js";
+import { getRabbitMQChannel } from "./cartQueue.js";
 import Cart from "./model.js";
 
-const getCart = () => {};
+const getCart = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userCart = await Cart.findOne({ userId: userId });
+    const ch = await getRabbitMQChannel();
+
+    ch.sendToQueue(
+      "product-service-queue",
+      Buffer.from(JSON.stringify({ cart: userCart.items }))
+    );
+  } catch (err) {
+    res.status(400).json(`error: ${err}`);
+  }
+};
 
 const createCart = async (user) => {
   try {
     const { _id } = user.newUser;
-    console.log(_id);
     const cart = new Cart({
       userId: _id,
       items: [],

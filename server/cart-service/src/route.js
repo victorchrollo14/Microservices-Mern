@@ -11,7 +11,7 @@ import {
 export const cartRouter = Router();
 
 cartRouter.post("/", createCart);
-cartRouter.get("/", verifyToken, getCart);
+cartRouter.get("/:userId", verifyToken, getCart);
 cartRouter.put("/add/:productId", verifyToken, addItem);
 cartRouter.delete("/delete/:productId", verifyToken, deleteItem);
 cartRouter.post("/clear", verifyToken, deleteAllItems);

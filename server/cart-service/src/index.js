@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 import { cartRouter } from "./route.js";
-import { connectToRabbitMQ } from "./cartQueue.js";
 
 const app = Express();
 const PORT = 5000;
@@ -26,9 +25,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/cart", cartRouter);
-
-// connect to rabbitmq
-connectToRabbitMQ();
 
 const runServer = async () => {
   const connect = await mongoose.connect(process.env.CART_MONGODB_URI);
