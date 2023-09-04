@@ -12,6 +12,6 @@ export const cartRouter = Router();
 
 cartRouter.post("/", createCart);
 cartRouter.get("/", verifyToken, getCart);
-cartRouter.post("/add/:productId", verifyToken, addItem);
-cartRouter.post("/delete/:productId", verifyToken, deleteItem);
+cartRouter.put("/add/:productId", verifyToken, addItem);
+cartRouter.delete("/delete/:productId", verifyToken, deleteItem);
 cartRouter.post("/clear", verifyToken, deleteAllItems);

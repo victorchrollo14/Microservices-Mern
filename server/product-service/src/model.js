@@ -9,6 +9,6 @@ const ProductSchema = new Schema({
   category: String,
 });
 
-const Products = model("Products", ProductSchema);
+const Products = model("Product", ProductSchema);
 
 export { Products };

@@ -9,7 +9,7 @@ const createCart = async (user) => {
     console.log(_id);
     const cart = new Cart({
       userId: _id,
-      items: [{ productId: "64ecce155ac72861f17708fe", quantity: 1 }],
+      items: [],
     });
 
     await cart.save();
@@ -19,7 +19,21 @@ const createCart = async (user) => {
   }
 };
 
-const addItem = () => {};
+const addItem = async (req, res) => {
+  try {
+    const userId = req.body._id;
+    const productId = req.params.productId;
+    const currentUserCart = await Cart.findOne({ userId: userId });
+
+    if (currentUserCart) {
+      let itemArray = { productId: productId, quantity: 1 };
+      currentUserCart.items.push(itemArray);
+      currentUserCart.save();
+    }
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
 
 const deleteItem = () => {};
 

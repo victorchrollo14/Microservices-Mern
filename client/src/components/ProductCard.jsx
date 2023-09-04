@@ -3,6 +3,22 @@ import { Link } from "react-router-dom";
 
 export const ProductCard = ({ item }) => {
   const { _id, title, subtitle, price, images } = item;
+  const token = localStorage.getItem("Token");
+  const user = localStorage.getItem("User");
+
+  const addToCart = async (e, id) => {
+    if (token) {
+      const response = await fetch(`http://localhost:80/cart/add/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: user,
+      });
+      // const data = await response.json();
+    }
+  };
 
   return (
     <li className="w-auto max-w-64 mb-5 h-fit" key={_id}>
@@ -29,7 +45,10 @@ export const ProductCard = ({ item }) => {
               ${price}
             </span>
           </div>
-          <div className="add-to-cart bg-black text-white hover:border py-3 px-4 rounded-lg cursor-pointer hover:text-black hover:bg-white">
+          <div
+            className="add-to-cart bg-black text-white hover:border py-3 px-4 rounded-lg cursor-pointer hover:text-black hover:bg-white"
+            onClick={(e) => addToCart(e, _id)}
+          >
             CART +
           </div>
         </figcaption>
