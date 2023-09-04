@@ -1,5 +1,6 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import { Schema, model } from "mongoose";
+import "dotenv/config";
 
 const CartSchema = new Schema({
   userId: {
@@ -11,7 +12,7 @@ const CartSchema = new Schema({
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Products",
+        ref: "Product",
         required: true,
       },
       quantity: {
