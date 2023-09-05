@@ -11,8 +11,28 @@ const getCart = async (req, res) => {
       "product-service-queue",
       Buffer.from(JSON.stringify({ cart: userCart.items }))
     );
+
+    let cart = await new Promise((resolve) => {
+      ch.consume("productDetails-queue", (message, ) => {
+        const parsedData = JSON.parse(message.content);
+        resolve(parsedData);
+        ch.ack(message);
+      });
+    });
+
+    if (!cart) {
+      res.status(400).json({
+        error:
+          "unable to fetch cart data right now, try again after some time.",
+      });
+      return;
+    }
+
+    console.log(cart);
+    res.status(200).json(cart);
   } catch (err) {
-    res.status(400).json(`error: ${err}`);
+    console.log(err);
+    res.status(400).json({ error: err });
   }
 };
 

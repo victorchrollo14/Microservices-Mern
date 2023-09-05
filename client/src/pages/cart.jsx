@@ -13,8 +13,13 @@ const getCart = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
+    const data = await response.json();
+    if (data.error) {
+      alert(data.error);
+    }
+    console.log(data);
   } catch (err) {
-    console.log(`error: ${err}`);
+    throw err;
   }
 };
 

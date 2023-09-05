@@ -7,11 +7,35 @@ const getData = async (req, res) => {
 };
 
 const getCartData = async () => {
-  const ch = await getRabbitMQChannel();
-  ch.consume("product-service-queue", (message) => {
-    const data = JSON.parse(message.content);
-    console.log(data);
-  });
+  try {
+    const ch = await getRabbitMQChannel();
+    let data = await new Promise((resolve) => {
+      ch.consume("product-service-queue", (message) => {
+        const parsedData = JSON.parse(message.content);
+        resolve(parsedData);
+        ch.ack(message);
+      });
+    });
+
+    const cart = await data.cart;
+
+    for (const product of cart) {
+      const { productId } = product;
+
+      const productDetails = await Products.findOne({ _id: productId });
+      const { title, subtitle, price, images, category } = productDetails;
+
+      product.title = title;
+      product.subtitle = subtitle;
+      product.price = price;
+      product.images = images;
+      product.category = category;
+    }
+
+    ch.sendToQueue("productDetails-queue", Buffer.from(JSON.stringify(cart)));
+  } catch (err) {
+    console.log(`error: ${err}`);
+  }
 };
 
 getCartData();

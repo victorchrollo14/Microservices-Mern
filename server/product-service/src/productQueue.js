@@ -8,6 +8,7 @@ const connectToRabbitMQ = async () => {
     connection = await amqp.connect(amqpServer);
     channel = await connection.createChannel();
     await channel.assertQueue("product-service-queue");
+    await channel.assertQueue("productDetails-queue");
 
     return channel;
   } catch (err) {
